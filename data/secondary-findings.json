@@ -1,0 +1,104 @@
+[
+  {
+    "movie": "control",
+    "original_radius": 2,
+    "variants": [
+      {
+        "radius": 1,
+        "common22": {
+          "n_frames": 22,
+          "slope_nm_s": -14.75083641,
+          "intercept_um": 0.7852683,
+          "r_squared": 0.55264436
+        },
+        "author_window": {
+          "n_frames": 59,
+          "slope_nm_s": -1.61610931,
+          "intercept_um": 0.31243243,
+          "r_squared": 0.03665018
+        }
+      },
+      {
+        "radius": 2,
+        "common22": {
+          "n_frames": 21,
+          "slope_nm_s": -7.67848049,
+          "intercept_um": 0.69198061,
+          "r_squared": 0.49754255
+        },
+        "author_window": {
+          "n_frames": 56,
+          "slope_nm_s": 0.42026731,
+          "intercept_um": 0.4055388,
+          "r_squared": 0.00544927
+        }
+      },
+      {
+        "radius": 3,
+        "common22": {
+          "n_frames": 21,
+          "slope_nm_s": -2.91010556,
+          "intercept_um": 0.59813255,
+          "r_squared": 0.19868038
+        },
+        "author_window": {
+          "n_frames": 59,
+          "slope_nm_s": -1.07246,
+          "intercept_um": 0.50454281,
+          "r_squared": 0.05997306
+        }
+      }
+    ]
+  },
+  {
+    "movie": "protrusion",
+    "original_radius": 1,
+    "variants": [
+      {
+        "radius": 1,
+        "common22": {
+          "n_frames": 22,
+          "slope_nm_s": 43.5871375,
+          "intercept_um": 0.05347356,
+          "r_squared": 0.6583903
+        },
+        "author_window": {
+          "n_frames": 22,
+          "slope_nm_s": 43.5871375,
+          "intercept_um": 0.05347356,
+          "r_squared": 0.6583903
+        }
+      },
+      {
+        "radius": 2,
+        "common22": {
+          "n_frames": 20,
+          "slope_nm_s": 62.37720031,
+          "intercept_um": 1.16995149,
+          "r_squared": 0.62484201
+        },
+        "author_window": {
+          "n_frames": 20,
+          "slope_nm_s": 62.37720031,
+          "intercept_um": 1.16995149,
+          "r_squared": 0.62484201
+        }
+      },
+      {
+        "radius": 3,
+        "common22": {
+          "n_frames": 12,
+          "slope_nm_s": -17.70376022,
+          "intercept_um": 4.43889315,
+          "r_squared": 0.2960744
+        },
+        "author_window": {
+          "n_frames": 12,
+          "slope_nm_s": -17.70376022,
+          "intercept_um": 4.43889315,
+          "r_squared": 0.2960744
+        }
+      }
+    ]
+  }
+]

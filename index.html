@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reproducible construct-control and image-readout exploration for the Yan Lab, by Cathy Liu.">
+  <title>Exploratory Analyses Inspired by the Yan Lab</title>
+  <link rel="stylesheet" href="styles.css?v=20261006-1">
+</head>
+<body>
+<main class="page">
+  <h1>Exploratory Analyses Inspired by the Yan Lab</h1>
+  <div class="byline">
+    Cathy Liu · Quantitative biology · <a href="mailto:cathyliu014@gmail.com">cathyliu014@gmail.com</a><br>
+    Prepared for the Yan Lab, Stanford University<br>
+    Personal exploratory project, October 2026
+  </div>
+  <nav class="section-nav" aria-label="Demo sections">
+    <a href="#motivation">Motivation</a><a href="#a1">Probe controls</a><a href="#a2">Readout robustness</a><a href="#relevance">Relevance</a>
+  </nav>
+  <p>The Yan Lab is developing genetically encoded probes to make cellular forces visible. Before a new construct can reveal the mechanics of a dividing cell, its fluorescent response needs to be understood in the conditions where it will be used. Which changes belong to the molecular probe, which belong to the assay, and which survive the way an image is analyzed?</p>
+  <p>I built two connected checks for that build-and-test cycle: a construct-level comparison of published unloaded FRET measurements, and a parameter-sensitivity analysis of the team's public membrane-flow movies. Together they identify controls and readout checks to carry into the next experiment. These are separate benchmarks, not a calibration of a Yan Lab force sensor.</p>
+  <hr id="motivation">
+  <section aria-labelledby="how-heading">
+    <h2 id="how-heading">How it works</h2>
+    <p>First, explore measured FRET efficiencies from <a href="https://doi.org/10.7554/eLife.33927">LaCroix et al. (2018)</a>, an external Hoffman Lab dataset. Compare the same nominal linker in a lysate assay and in cells. Then inspect two public HL-60 movies from <a href="https://doi.org/10.1016/j.cell.2023.05.014">De Belly, Yan et al. (2023)</a>, reprocessed with the authors' actual membrane-outline code. Changing one analysis choice reveals how dependable a fluorescent readout may be.</p>
+  </section>
+  <hr id="a1">
+  <section aria-labelledby="analysis-one-heading">
+    <h2 id="analysis-one-heading">Analysis 1 — Choose the next control, not a winner</h2>
+    <div class="experiment">
+      <div class="exp-label">Assay-transfer check</div>
+      <div class="exp-title">Same nominal linker. Different unloaded baseline?</div>
+      <p>Start with the two 30-amino-acid linkers: GPGGA and GGSGGS move in opposite directions between the published assay contexts. That motivates a matched-length comparison in the intended host—not a claim that either is the better force sensor.</p>
+    </div>
+    <div class="panel">
+      <div class="controls">
+        <label for="construct">Linker design<select id="construct"></select></label>
+        <label for="tolerance">Planning tolerance: <output id="tolerance-value">5.0</output> pp<input id="tolerance" type="range" min="0" max="15" step="0.5" value="5"></label>
+      </div>
+      <div class="chips" id="suggestions"><span>Compare:</span></div>
+      <svg id="hero-viz" class="viz" viewBox="0 0 600 285" role="img" aria-label="Individual unloaded FRET measurements in lysate and cells"></svg>
+      <div class="readout" id="readout" aria-live="polite">Loading verified measurements…</div>
+      <figcaption>Dots are source observations; black marks show mean ± sample SD, not confidence intervals. Lysate dots are experiment measurements; cell dots are pooled cells from three experiments. Groups are unpaired. Host and measurement modality change together.</figcaption>
+      <p class="utility"><strong>Decision supported:</strong> which baseline/control comparison to include before interpreting a new construct. <strong>Not supported:</strong> mechanical sensitivity, force range, or conversion to pN.</p>
+      <details><summary id="review-summary">Review all construct comparisons</summary><div class="table-wrap"><table><thead><tr><th>Linker</th><th>Lysate n</th><th>Cell n</th><th>Shift, pp</th><th>Planning flag</th></tr></thead><tbody id="construct-table"></tbody></table></div></details>
+      <div class="downloads"><button id="export-constructs">Export comparison CSV</button><button id="export-plan">Export next-test record</button></div>
+    </div>
+    <div class="metric-row">
+      <div class="metric"><span class="metric-val" id="metric-one">16</span><span class="metric-desc">measured linker designs</span></div>
+      <div class="metric"><span class="metric-val" id="metric-two">8</span><span class="metric-desc">with both assay contexts</span></div>
+      <div class="metric"><span class="metric-val" id="metric-three">—</span><span class="metric-desc">outside chosen tolerance</span></div>
+    </div>
+    <p id="plan-readout"></p>
+    <p class="methods-note">The tolerance is your planning criterion, not estimated instrument noise. A small shift does not prove equivalence. The export preserves missing contexts and proposes checks that remain unperformed: sequence identity, localization, correction controls, independent cell batches, and direct mechanical calibration.</p>
+  </section>
+  <hr id="a2">
+  <section aria-labelledby="analysis-two-heading">
+    <h2 id="analysis-two-heading">Analysis 2 — Does the readout survive the analysis?</h2>
+    <div class="experiment">
+      <div class="exp-label">Published-code reanalysis</div>
+      <div class="exp-title">A membrane-marker trajectory is only as stable as its extraction</div>
+      <p>The authors' <a href="https://github.com/weinerlab/Inverse_Photobleach_Flow">outline2map code</a> was run on both deposited movies. Compare erosion radii and time windows; inspect individual intensity profiles before trusting a fitted direction.</p>
+    </div>
+    <div class="panel">
+      <div class="controls">
+        <label for="movie">Public example<select id="movie"><option value="protrusion">Protruding cell</option><option value="control">Unstimulated cell</option></select></label>
+        <label for="window">Regression window<select id="window"><option value="common">First 22 analyzed frames</option><option value="author">Full author analysis window</option></select></label>
+        <label for="radius">Inspect erosion radius<select id="radius"><option value="1">1 pixel</option><option value="2">2 pixels</option><option value="3">3 pixels</option></select></label>
+      </div>
+      <svg id="motion-viz" class="viz" viewBox="0 0 600 330" role="img" aria-label="Retained membrane peak displacement for three erosion radii"></svg>
+      <div class="plot-legend"><span class="r1">● 1 px</span><span class="r2">● 2 px</span><span class="r3">● 3 px</span><span>points: retained centers · dashed: OLS</span></div>
+      <div class="readout" id="motion-readout" aria-live="polite"></div>
+      <div class="table-wrap"><table><thead><tr><th>Radius</th><th>Approx. nm/s</th><th>Retained</th><th>R²</th></tr></thead><tbody id="motion-table"></tbody></table></div>
+      <figcaption>Displacement is relative to each trace's first retained center. Time begins at the first analyzed frame, not verified stimulation onset. The spatial coordinate follows the authors' approximate unrolling convention; it is not independently calibrated contour arclength. Frames are not independent cells.</figcaption>
+      <details id="profile-details"><summary>Inspect a frame's observed profile and fit</summary>
+        <label class="frame-label" for="frame">Source frame <output id="frame-value">1</output><input id="frame" type="range" min="1" max="22" step="1" value="1"></label>
+        <svg id="profile-viz" class="viz" viewBox="0 0 600 260" role="img" aria-label="Observed membrane intensity profile and Gaussian fit"></svg>
+        <p class="utility" id="profile-readout"></p>
+      </details>
+      <div class="downloads"><button id="export-motion">Export frame-review CSV</button></div>
+      <p class="utility"><strong>Decision supported:</strong> whether a proposed extraction setting needs review before transferring it to a new cell assay. <strong>Not supported:</strong> a biological reversal, tension estimate, or new-probe validation.</p>
+    </div>
+    <p>In the protruding example, changing the erosion radius from 1 to 3 pixels reverses the fitted slope while reducing retained frames from 22 to 12. That is a reason to inspect segmentation and fit behavior—not evidence that membrane flow reversed. In the unstimulated example, the fitted slope also depends on the time window.</p>
+  </section>
+  <hr id="relevance">
+  <section aria-labelledby="relevance-heading">
+    <h2 id="relevance-heading">Why this matters for the lab</h2>
+    <p>The <a href="https://www.yanlabstanford.org/research">lab's stated goal</a> is to develop genetically encoded force probes and calibrate useful dynamic ranges. This project targets an earlier, practical question: what should be checked before a fluorescent change is assigned a mechanical meaning? The proposed validation need is my inference from that programme, not a bottleneck reported by the lab.</p>
+    <p>A next experiment could compare the two 30-aa repeat linkers in the same host and acquisition setting, with matched unloaded and correction controls. Sequence verification, expression and localization checks would precede a force–fluorescence calibration under loading and unloading. Separately, a membrane-imaging workflow could lock its segmentation after blinded frame review, then test robustness across independently cultured cells. The exported records make these decisions auditable.</p>
+    <h2>What I would bring</h2>
+    <p>My background combines analytical-method work in vaccine development with computational cancer biology and research synthesis. I would bring careful records, quantitative comparisons and attention to controls to the lab's probe-development work, while learning its specific construction and biophysical techniques. This assistant-supported exploratory implementation demonstrates an approach to analysis; it is not evidence of hands-on cloning, optical trapping or independent software authorship.</p>
+    <h2>Methods note</h2>
+    <p class="methods-note">Analysis 1 retains all 850 measured observations across 16 designs from Figure 1G/H of LaCroix et al.; eight have both contexts. Lysates were measured by spectrofluorometry and vinculin-null mouse embryonic fibroblasts by FRET imaging. Missing batch labels prevent cell-level independent-replicate inference. The separate live/fixed control data are available in the download but are not pooled into this comparison. No modeled force curves, p-values or inferred forces are used.</p>
+    <p class="methods-note">Analysis 2 pins upstream code at <code>1f46949</code> and the <a href="https://doi.org/10.5281/zenodo.7894213">CC BY 4.0 archived release</a>. The original control/protrusion radii are 2/1 pixels. Author center gates are retained, not treated as sufficient quality criteria. Two failed fits and three covariance warnings remain explicit. The 22-frame control view subsets regression after full-window preprocessing. These are two example movies, not the full study or a replicated comparison.</p>
+    <p class="methods-note"><a href="REPRODUCIBILITY.md">Reproduce the analyses</a> · <a href="data/primary-data.json">Primary measurements</a> · <a href="data/secondary-data.json">Movie-derived measurements</a> · <a href="https://github.com/liuzhitong330/yan-lab-demo">Source code</a> · <a href="THIRD_PARTY.md">Attribution &amp; licenses</a></p>
+  </section>
+  <footer>
+    Cathy Liu · <a href="mailto:cathyliu014@gmail.com">cathyliu014@gmail.com</a> · <a href="tel:+14152163799">415-216-3799</a><br>
+    Independent application demo · Not affiliated with or endorsed by the source authors
+  </footer>
+</main>
+<script src="data.js?v=20261006-1"></script><script src="app.js?v=20261006-1"></script>
+</body>
+</html>

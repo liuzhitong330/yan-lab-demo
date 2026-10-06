@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "data_sha256": "0a286c3897dfaeec7e9da1bf5b8b30f9da6083bbb9314a94825e05c10f5893af",
+  "movies_checked": 2,
+  "radius_variants_checked": 6,
+  "per_frame_checks": 246,
+  "intensity_profile_values_checked": 93198,
+  "independent_OLS_checks": 12,
+  "fit_warning_records": [
+    [
+      "control",
+      2,
+      26,
+      [
+        "Covariance of the parameters could not be estimated"
+      ]
+    ],
+    [
+      "control",
+      3,
+      20,
+      [
+        "Covariance of the parameters could not be estimated"
+      ]
+    ],
+    [
+      "protrusion",
+      2,
+      19,
+      [
+        "Covariance of the parameters could not be estimated"
+      ]
+    ]
+  ],
+  "nonconvergent_fit_records": [
+    [
+      "control",
+      1,
+      38,
+      [
+        "Optimal parameters not found: Number of calls to function has reached maxfev = 1000."
+      ]
+    ],
+    [
+      "control",
+      2,
+      34,
+      [
+        "Optimal parameters not found: Number of calls to function has reached maxfev = 1000."
+      ]
+    ]
+  ],
+  "scope": "Independent scalar OLS, coordinate and Gaussian-residual arithmetic; structure and source metadata checks. This does not establish biological validity or independence."
+}
